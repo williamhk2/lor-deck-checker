@@ -12,7 +12,7 @@ export class RegionLockChecker extends BaseChecker implements CheckerInterface {
       let factions: Array<number> = [];
       let markedFactions: Array<number> = [];
 
-      this.decks.map(deck => deck.factions.map((faction) => {
+      this.decks.map(deck => deck.factions.map(faction => {
          if (factions.includes(faction.id)) {
             if(!markedFactions.includes(faction.id)) {
                markedFactions.push(faction.id);

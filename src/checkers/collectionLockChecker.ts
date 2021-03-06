@@ -2,27 +2,31 @@ import { BaseChecker } from "./base/baseChecker";
 import { CheckerInterface } from "./base/checkerInterface";
 import { CheckResult } from "../types";
 
-export class CardLockChecker extends BaseChecker implements CheckerInterface {
+export class CollectionLockChecker extends BaseChecker implements CheckerInterface {
 
     constructor(deckCodes: Array<string>) {
         super(deckCodes);
     }
 
     check(): CheckResult {
-        let cards: Array<string> = [];
-        let markedCards: Array<string> = [];
+        const CARD_LIMIT: number = 3;
+        let cardsCount: object = {};
+        let cards: object = {};
 
         this.decks.map(deck => deck.cards.map(card => {
-            if (cards.includes(card.code)) {
-                if (!markedCards.includes(card.code)) {
-                    markedCards.push(card.code);
-                    this.markedCards.push(card);
-                }
+            if (cardsCount[card.code] === undefined) {
+                cardsCount[card.code] = card.count;
+                cards[card.code] = card;
             }
             else {
-                cards.push(card.code);
+                cardsCount[card.code] += card.count;
             }
         }));
+
+        for (const [key, value] of Object.entries(cardsCount)) {
+            if (value > CARD_LIMIT) 
+                this.markedCards.push(cards[key]);
+        }
 
         let checkResult: CheckResult = {
             success: this.markedCards.length == 0,
