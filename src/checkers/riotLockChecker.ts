@@ -1,85 +1,99 @@
 import { BaseChecker } from "./base/baseChecker";
 import { CheckerInterface } from "./base/checkerInterface";
-import { CheckResult } from "../types";
+import { CheckResult, Deck } from "../types";
 import { Faction } from "runeterra";
 
 export class RiotLockChecker extends BaseChecker implements CheckerInterface {
     championCardCodes: Array<string>;
-    
+    factionsPerDeck: Array<Array<Faction>>;
+    tempMarkedFactions: Array<number>;
+    tempChampionCards: Array<string>;
+    tempMarkedChampionCards: Array<string>;
+    decksWithoutChampions: number;
+
     constructor(deckCodes: Array<string>, championCardCodes: Array<string>) {
         super(deckCodes);
         this.championCardCodes = championCardCodes;
+        this.factionsPerDeck = [];
+        this.tempMarkedFactions = [];
+        this.tempChampionCards = [];
+        this.tempMarkedChampionCards = [];
+        this.decksWithoutChampions = 0;
     }
 
     check(): CheckResult {
-        let championCards: Array<string> = [];
-        let markedChampionCards: Array<string> = [];
-        let markedFactions: Array<number> = [];
-        let cards: object = {};
-        let factions: Array<Array<Faction>> = [];
-        let decksWithoutChampions = 0;
-
         this.decks.map(deck => {
-            let champions: Array<string> = [];
-            deck.cards.map(card => {
-                if (cards[card.code] === undefined)
-                    cards[card.code] = card;
-                if (this.championCardCodes.includes(card.code) && !champions.includes(card.code))
-                    champions.push(card.code);
-            });
-            let addedFactions: Array<number> = [];
-            let thisDeckFactions: Array<Faction> = [];
-            deck.factions.map(faction => {
-                if (!addedFactions.includes(faction.id)) {
-                    addedFactions.push(faction.id);
-                    thisDeckFactions.push(faction);
-                }
-            });
-            factions.map(factionsList => {
-                let equalFactions: number = 0;
-                for (let item of thisDeckFactions) {
-                    factionsList.map(faction => {
-                        if (item.id === faction.id)
-                            equalFactions++;
-                    });
-                }
-                if (equalFactions === factionsList.length) {
-                    factionsList.map(markedFaction => {
-                        if (!markedFactions.includes(markedFaction.id)) {
-                            markedFactions.push(markedFaction.id);
-                            this.markedFactions.push(markedFaction);
-                        }
-                    });
-                }
-            });
-            factions.push(thisDeckFactions);
-            champions.map(champion => {
-                if (championCards.includes(champion)) {
-                    if (!markedChampionCards.includes(champion)) {
-                        markedChampionCards.push(champion);
-                        this.markedCards.push(cards[champion]);
-                    }
-                }
-                else {
-                    championCards.push(champion);
-                }
-            });
-            if(champions.length === 0)
-                decksWithoutChampions++;
+            this.checkChampionCards(deck);
+            this.checkFactions(deck.factions);
         });
 
-        if (decksWithoutChampions > 1) {
+        if (this.decksWithoutChampions > 1) {
             this.issues.push('There is more than one deck without champions');
         }
 
         let checkResult: CheckResult = {
-            success: (this.issues.length === 0) && (this.markedCards.length === 0) 
-                && (this.markedFactions.length === 0),
+            success: (this.issues.length === 0) && (this.markedCards.length === 0) && (this.markedFactions.length === 0),
             decks: this.decks,
             markedCards: this.markedCards,
             markedFactions: this.markedFactions,
             issues: this.issues
         };
         return checkResult;
+    }
+
+    checkChampionCards(deck: Deck) {
+        let cards: object = {};
+        let hasChampions: boolean = false;
+
+        deck.cards.map(card => {
+            if (cards[card.code] === undefined)
+                cards[card.code] = card;
+            if (this.championCardCodes.includes(card.code)) {
+                hasChampions = true;
+                if (this.tempChampionCards.includes(card.code)) {
+                    if (!this.tempMarkedChampionCards.includes(card.code)) {
+                        this.tempMarkedChampionCards.push(card.code);
+                        this.markedCards.push(cards[card.code]);
+                    }
+                }
+                else {
+                    this.tempChampionCards.push(card.code);
+                }
+            }
+        });
+
+        if(!hasChampions)
+            this.decksWithoutChampions++;
+    }
+
+    checkFactions(deckFactions: Array<Faction>): void {
+        let tempFactions: Array<number> = [];
+        let distinctDeckFactions: Array<Faction> = [];
+
+        deckFactions.map(faction => {
+            if (!tempFactions.includes(faction.id)) {
+                tempFactions.push(faction.id);
+                distinctDeckFactions.push(faction);
+            }
+        });
+
+        this.factionsPerDeck.map(factions => {
+            let equalFactions: number = 0;
+            for (let item of distinctDeckFactions) {
+                factions.map(faction => {
+                    if (item.id === faction.id)
+                        equalFactions++;
+                });
+            }
+            if (equalFactions === factions.length) {
+                factions.map(markedFaction => {
+                    if (!this.tempMarkedFactions.includes(markedFaction.id)) {
+                        this.tempMarkedFactions.push(markedFaction.id);
+                        this.markedFactions.push(markedFaction);
+                    }
+                });
+            }
+        });
+        this.factionsPerDeck.push(distinctDeckFactions);
     }
 }
