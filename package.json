@@ -1,0 +1,17 @@
+{
+  "name": "lor-deck-checker",
+  "version": "1.0.0",
+  "description": "A simple package to check decks based in tournament rules",
+  "main": "index.js",
+  "dependencies": {
+    "runeterra": "git@github.com:williamhk2/runeterra.git"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}

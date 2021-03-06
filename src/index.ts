@@ -1,0 +1,10 @@
+import { CardLockChecker } from "./checkers/cardLockChecker";
+import { RegionLockChecker } from "./checkers/regionLockChecker";
+// TBD
+let regionChecker = new CardLockChecker([
+    "CECAEAIFDUUACBABAUAQCAIMAEBQCBQDAMAQCAYUGIAQIAIOAYAQKAIPCQMSCLAEAEBQCAQCAECRGNQBAQAQMAIBAEVA",
+    "CEBAOAYJJFKGBWAB3EA5WAO5AEAQIBYNAIBQGCINENLAGBAHAQ5USAQBAQDS2AYDBEEVKZA",
+    "CECAKBAHCQWTAN25AMAQGCY7G4AQEAYFAMCAGAQEB4BACBAHHMAQCAZYAA"
+]);
+
+console.log(regionChecker.check());
