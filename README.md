@@ -10,7 +10,7 @@ Rule | Description | Singleton*
 CardLock | Every deck must have different cards from each other | TBD
 CollectionLock | The amount of a card among the decks must be at most 3 (three) | Not Applicable
 RegionLock | Every deck must have different regions from each other | TBD
-RiotLock | Every deck must have different champions and different combination of regions from each other. Also, it is only allowed at most one deck without champions. | TBD
+RiotLock | Every deck must have different champions and different combination of regions from each other. Also, it is only allowed at most one deck without champions | TBD
 
 *A optional check for singleton decks (where the amount of a card must be at most 1 (one).
 

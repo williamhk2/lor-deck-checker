@@ -26,7 +26,8 @@ export class BaseChecker {
 
         deckCards.map((card) => {
             if (!factions.includes(card.faction)) factions.push(card.faction);
-            if (this.cards[card.code] === undefined) this.cards[card.code] = card;
+            if (this.cards[card.code] === undefined)
+                this.cards[card.code] = card;
             else this.cards[card.code].count += card.count;
         });
         return { cards: deckCards, factions, code: deckCode };

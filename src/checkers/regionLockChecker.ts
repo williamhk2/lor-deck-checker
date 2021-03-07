@@ -21,15 +21,14 @@ export class RegionLockChecker extends BaseChecker implements CheckerInterface {
                     factionObjects[faction.id] = faction;
                 }
             });
-            
+
             tempFactions.map((faction) => {
-                if(factions.includes(faction)) {
+                if (factions.includes(faction)) {
                     if (!markedFactions.includes(faction)) {
                         markedFactions.push(faction);
                         this.markedFactions.push(factionObjects[faction]);
                     }
-                }
-                else {
+                } else {
                     factions.push(faction);
                 }
             });
