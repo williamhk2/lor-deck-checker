@@ -14,4 +14,7 @@ RiotLock | Every deck must have different champions and different combination of
 
 *A optional check for singleton decks (where the amount of a card must be at most 1 (one).
 
-These rules are based on [@xTecna](https://github.com/xTecna/lor-deck-checker) deck checker tool. :purple_heart:
+These rules are based on [@xTecna](https://github.com/xTecna/lor-deck-checker) deck checker tool. The deck decoder is from [runeterra](https://github.com/SwitchbladeBot/runeterra) project. :purple_heart:
+
+### Usage
+
