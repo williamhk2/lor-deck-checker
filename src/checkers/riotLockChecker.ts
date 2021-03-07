@@ -32,7 +32,10 @@ export class RiotLockChecker extends BaseChecker implements CheckerInterface {
         }
 
         const checkResult: CheckResult = {
-            success: this.issues.length === 0 && this.markedCards.length === 0 && this.markedFactions.length === 0,
+            success:
+                this.issues.length === 0 &&
+                this.markedCards.length === 0 &&
+                this.markedFactions.length === 0,
             decks: this.decks,
             markedCards: this.markedCards,
             markedFactions: this.markedFactions,

@@ -2,7 +2,9 @@ import { BaseChecker } from './base/baseChecker';
 import { CheckerInterface } from './base/checkerInterface';
 import { CheckResult } from '../types';
 
-export class CollectionLockChecker extends BaseChecker implements CheckerInterface {
+export class CollectionLockChecker
+    extends BaseChecker
+    implements CheckerInterface {
     constructor(deckCodes: string[]) {
         super(deckCodes);
     }
