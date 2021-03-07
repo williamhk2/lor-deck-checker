@@ -6,12 +6,14 @@ export class BaseChecker {
     markedCards: Card[];
     markedFactions: Faction[];
     issues: string[];
+    cards: object;
 
     constructor(deckCodes: string[]) {
         this.decks = [];
         this.markedCards = [];
         this.markedFactions = [];
         this.issues = [];
+        this.cards = {};
 
         deckCodes.map((deckCode) => {
             this.decks.push(this.getDeckFromCode(deckCode));
@@ -19,13 +21,15 @@ export class BaseChecker {
     }
 
     getDeckFromCode(deckCode: string): Deck {
-        const cards: Card[] = DeckEncoder.decode(deckCode);
+        const deckCards: Card[] = DeckEncoder.decode(deckCode);
         const factions: Faction[] = [];
 
-        cards.map((card) => {
+        deckCards.map((card) => {
             if (!factions.includes(card.faction)) factions.push(card.faction);
+            if (this.cards[card.code] === undefined) this.cards[card.code] = card;
+            else this.cards[card.code].count += card.count;
         });
-        return { cards, factions, code: deckCode };
+        return { cards: deckCards, factions, code: deckCode };
     }
 
     clearData() {

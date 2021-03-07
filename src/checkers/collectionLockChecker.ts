@@ -5,6 +5,7 @@ import { CheckResult } from '../types';
 export class CollectionLockChecker
     extends BaseChecker
     implements CheckerInterface {
+
     constructor(deckCodes: string[]) {
         super(deckCodes);
     }
@@ -12,22 +13,11 @@ export class CollectionLockChecker
     check(): CheckResult {
         this.clearData();
         const CARD_LIMIT: number = 3;
-        let cardsCount: object = {};
-        let cards: object = {};
 
-        this.decks.map((deck) =>
-            deck.cards.map((card) => {
-                if (cardsCount[card.code] === undefined) {
-                    cardsCount[card.code] = card.count;
-                    cards[card.code] = card;
-                } else {
-                    cardsCount[card.code] += card.count;
-                }
-            }),
-        );
-
-        for (const [key, value] of Object.entries(cardsCount)) {
-            if (value > CARD_LIMIT) this.markedCards.push(cards[key]);
+        for (const [key, value] of Object.entries(this.cards)) {
+            if (value.count > CARD_LIMIT) {
+                this.markedCards.push(this.cards[key]);
+            } 
         }
 
         const checkResult: CheckResult = {

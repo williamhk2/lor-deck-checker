@@ -9,18 +9,18 @@ export class CardLockChecker extends BaseChecker implements CheckerInterface {
 
     check(): CheckResult {
         this.clearData();
-        let cards: string[] = [];
+        let deckCards: string[] = [];
         let markedCards: string[] = [];
 
         this.decks.map((deck) =>
             deck.cards.map((card) => {
-                if (cards.includes(card.code)) {
+                if (deckCards.includes(card.code)) {
                     if (!markedCards.includes(card.code)) {
                         markedCards.push(card.code);
-                        this.markedCards.push(card);
+                        this.markedCards.push(this.cards[card.code]);
                     }
                 } else {
-                    cards.push(card.code);
+                    deckCards.push(card.code);
                 }
             }),
         );

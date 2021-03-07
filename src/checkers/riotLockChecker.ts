@@ -46,17 +46,17 @@ export class RiotLockChecker extends BaseChecker implements CheckerInterface {
     }
 
     checkChampionCards(deck: Deck) {
-        let cards: object = {};
+        let deckCards: object = {};
         let hasChampions: boolean = false;
 
         deck.cards.map((card) => {
-            if (cards[card.code] === undefined) cards[card.code] = card;
+            if (deckCards[card.code] === undefined) deckCards[card.code] = card;
             if (this.championCardCodes.includes(card.code)) {
                 hasChampions = true;
                 if (this.tempChampionCards.includes(card.code)) {
                     if (!this.tempMarkedChampionCards.includes(card.code)) {
                         this.tempMarkedChampionCards.push(card.code);
-                        this.markedCards.push(cards[card.code]);
+                        this.markedCards.push(this.cards[card.code]);
                     }
                 } else {
                     this.tempChampionCards.push(card.code);

@@ -8,8 +8,8 @@ const testData = JSON.parse(fs.readFileSync(path.resolve('test/deckCheckerTestDa
 describe('CardLockChecker', () => {
     it('should check decks based on card lock rule', () => {
         const expectedMarkedCards = [ 
-            { code: '04SH045', count: 3 },
-            { code: '04SH059', count: 2 }
+            { code: '04SH045', count: 4 },
+            { code: '04SH059', count: 4 }
         ];
         const expectedMarkedFactions = [];
         const expectedIssues = [];
@@ -28,8 +28,8 @@ describe('CardLockChecker', () => {
 describe('CollectionLockChecker', () => {
     it('should check decks based on collection lock rule', () => {
         const expectedMarkedCards = [ 
-            { code: '04SH059', count: 2 },
-            { code: '04SH045', count: 1 }
+            { code: '04SH059', count: 4 },
+            { code: '04SH045', count: 4 }
         ];
         const expectedMarkedFactions = [];
         const expectedIssues = [];
@@ -65,8 +65,8 @@ describe('RegionLockChecker', () => {
 describe('RiotLockChecker', () => {
     it('should check decks based on riot lock rule', () => {
         const expectedMarkedCards = [ 
-            { code: '04FR005', count: 3 },
-            { code: '03FR006', count: 3 }
+            { code: '04FR005', count: 6 },
+            { code: '03FR006', count: 6 }
         ];
         const expectedMarkedFactions = [
             { "id": 5, "shortCode": "SI" },
