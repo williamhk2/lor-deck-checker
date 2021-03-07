@@ -1,8 +1,8 @@
 {
   "name": "lor-deck-checker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple package to check decks based in tournament rules",
-  "main": "dist/main.js",
+  "main": "dist/index.js",
   "files": [
     "dist/**/*"
   ],
@@ -20,13 +20,11 @@
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.2.3",
-    "webpack": "^5.24.3",
-    "webpack-cli": "^4.5.0"
+    "typescript": "^4.2.3"
   },
   "scripts": {
-    "build": "webpack",
-    "dev": "webpack && node dist/main.js",
+    "build": "tsc --build",
+    "dev": "tsc --build && node dist/index.js",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
