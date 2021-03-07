@@ -16,6 +16,10 @@ RiotLock | Every deck must have different champions and different combination of
 
 These rules are based on [@xTecna](https://github.com/xTecna/lor-deck-checker) deck checker tool. The deck decoder are from [runeterra](https://github.com/SwitchbladeBot/runeterra) project. :purple_heart:
 
+### Install
+
+`npm i lor-deck-checker`
+
 ### Usage
 
 You can check a deck, using the example code above.
