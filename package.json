@@ -2,9 +2,12 @@
   "name": "lor-deck-checker",
   "version": "1.0.0",
   "description": "A simple package to check decks based in tournament rules",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist/**/*"
+  ],
   "dependencies": {
-    "runeterra": "git@github.com:williamhk2/runeterra.git"
+    "runeterra": "git+https://github.com/williamhk2/runeterra.git"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
@@ -22,7 +25,12 @@
     "dev": "tsc --build && node dist/index.js",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'"
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [],
   "author": "",
