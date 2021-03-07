@@ -42,7 +42,7 @@ export class RiotLockChecker extends BaseChecker implements CheckerInterface {
     }
 
     checkChampionCards(deck: Deck) {
-        const cards: object = {};
+        let cards: object = {};
         let hasChampions: boolean = false;
 
         deck.cards.map((card) => {
@@ -64,8 +64,8 @@ export class RiotLockChecker extends BaseChecker implements CheckerInterface {
     }
 
     checkFactions(deckFactions: Faction[]): void {
-        const tempFactions: number[] = [];
-        const distinctDeckFactions: Faction[] = [];
+        let tempFactions: number[] = [];
+        let distinctDeckFactions: Faction[] = [];
 
         deckFactions.map((faction) => {
             if (!tempFactions.includes(faction.id)) {

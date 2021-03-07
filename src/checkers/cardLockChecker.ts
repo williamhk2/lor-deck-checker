@@ -8,8 +8,8 @@ export class CardLockChecker extends BaseChecker implements CheckerInterface {
     }
 
     check(): CheckResult {
-        const cards: string[] = [];
-        const markedCards: string[] = [];
+        let cards: string[] = [];
+        let markedCards: string[] = [];
 
         this.decks.map((deck) =>
             deck.cards.map((card) => {

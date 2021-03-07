@@ -9,8 +9,8 @@ export class CollectionLockChecker extends BaseChecker implements CheckerInterfa
 
     check(): CheckResult {
         const CARD_LIMIT: number = 3;
-        const cardsCount: object = {};
-        const cards: object = {};
+        let cardsCount: object = {};
+        let cards: object = {};
 
         this.decks.map((deck) =>
             deck.cards.map((card) => {
