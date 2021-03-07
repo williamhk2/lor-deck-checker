@@ -1,15 +1,15 @@
-import { Card, Faction } from "runeterra";
+import { Card, Faction } from 'runeterra';
 
 export type Deck = {
-    cards: Array<Card>;
+    cards: Card[];
     code: string;
-    factions: Array<Faction>;
+    factions: Faction[];
 };
 
 export type CheckResult = {
     success: boolean;
-    decks: Array<Deck>;
-    markedCards: Array<Card>;
-    markedFactions: Array<Faction>;
-    issues: Array<string>;
+    decks: Deck[];
+    markedCards: Card[];
+    markedFactions: Faction[];
+    issues: string[];
 };

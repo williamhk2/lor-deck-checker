@@ -1,17 +1,17 @@
-import { BaseChecker } from "./base/baseChecker";
-import { CheckerInterface } from "./base/checkerInterface";
-import { CheckResult, Deck } from "../types";
-import { Faction } from "runeterra";
+import { BaseChecker } from './base/baseChecker';
+import { CheckerInterface } from './base/checkerInterface';
+import { CheckResult, Deck } from '../types';
+import { Faction } from 'runeterra';
 
 export class RiotLockChecker extends BaseChecker implements CheckerInterface {
-    championCardCodes: Array<string>;
-    factionsPerDeck: Array<Array<Faction>>;
-    tempMarkedFactions: Array<number>;
-    tempChampionCards: Array<string>;
-    tempMarkedChampionCards: Array<string>;
+    championCardCodes: string[];
+    factionsPerDeck: Faction[][];
+    tempMarkedFactions: number[];
+    tempChampionCards: string[];
+    tempMarkedChampionCards: string[];
     decksWithoutChampions: number;
 
-    constructor(deckCodes: Array<string>, championCardCodes: Array<string>) {
+    constructor(deckCodes: string[], championCardCodes: string[]) {
         super(deckCodes);
         this.championCardCodes = championCardCodes;
         this.factionsPerDeck = [];
@@ -22,7 +22,7 @@ export class RiotLockChecker extends BaseChecker implements CheckerInterface {
     }
 
     check(): CheckResult {
-        this.decks.map(deck => {
+        this.decks.map((deck) => {
             this.checkChampionCards(deck);
             this.checkFactions(deck.factions);
         });
@@ -31,23 +31,22 @@ export class RiotLockChecker extends BaseChecker implements CheckerInterface {
             this.issues.push('There is more than one deck without champions');
         }
 
-        let checkResult: CheckResult = {
-            success: (this.issues.length === 0) && (this.markedCards.length === 0) && (this.markedFactions.length === 0),
+        const checkResult: CheckResult = {
+            success: this.issues.length === 0 && this.markedCards.length === 0 && this.markedFactions.length === 0,
             decks: this.decks,
             markedCards: this.markedCards,
             markedFactions: this.markedFactions,
-            issues: this.issues
+            issues: this.issues,
         };
         return checkResult;
     }
 
     checkChampionCards(deck: Deck) {
-        let cards: object = {};
+        const cards: object = {};
         let hasChampions: boolean = false;
 
-        deck.cards.map(card => {
-            if (cards[card.code] === undefined)
-                cards[card.code] = card;
+        deck.cards.map((card) => {
+            if (cards[card.code] === undefined) cards[card.code] = card;
             if (this.championCardCodes.includes(card.code)) {
                 hasChampions = true;
                 if (this.tempChampionCards.includes(card.code)) {
@@ -55,38 +54,35 @@ export class RiotLockChecker extends BaseChecker implements CheckerInterface {
                         this.tempMarkedChampionCards.push(card.code);
                         this.markedCards.push(cards[card.code]);
                     }
-                }
-                else {
+                } else {
                     this.tempChampionCards.push(card.code);
                 }
             }
         });
 
-        if(!hasChampions)
-            this.decksWithoutChampions++;
+        if (!hasChampions) this.decksWithoutChampions++;
     }
 
-    checkFactions(deckFactions: Array<Faction>): void {
-        let tempFactions: Array<number> = [];
-        let distinctDeckFactions: Array<Faction> = [];
+    checkFactions(deckFactions: Faction[]): void {
+        const tempFactions: number[] = [];
+        const distinctDeckFactions: Faction[] = [];
 
-        deckFactions.map(faction => {
+        deckFactions.map((faction) => {
             if (!tempFactions.includes(faction.id)) {
                 tempFactions.push(faction.id);
                 distinctDeckFactions.push(faction);
             }
         });
 
-        this.factionsPerDeck.map(factions => {
+        this.factionsPerDeck.map((factions) => {
             let equalFactions: number = 0;
-            for (let item of distinctDeckFactions) {
-                factions.map(faction => {
-                    if (item.id === faction.id)
-                        equalFactions++;
+            for (const item of distinctDeckFactions) {
+                factions.map((faction) => {
+                    if (item.id === faction.id) equalFactions++;
                 });
             }
             if (equalFactions === factions.length) {
-                factions.map(markedFaction => {
+                factions.map((markedFaction) => {
                     if (!this.tempMarkedFactions.includes(markedFaction.id)) {
                         this.tempMarkedFactions.push(markedFaction.id);
                         this.markedFactions.push(markedFaction);

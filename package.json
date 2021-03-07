@@ -6,10 +6,17 @@
   "dependencies": {
     "runeterra": "git@github.com:williamhk2/runeterra.git"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "prettier": "^2.2.1",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0"
+  },
   "scripts": {
     "build": "tsc --build",
-    "dev": "tsc --build && node dist/index.js"
+    "dev": "tsc --build && node dist/index.js",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json"
   },
   "keywords": [],
   "author": "",
