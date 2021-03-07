@@ -1,6 +1,6 @@
 {
   "name": "lor-deck-checker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple package to check decks based in tournament rules",
   "main": "dist/index.js",
   "files": [
