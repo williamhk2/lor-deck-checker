@@ -27,4 +27,10 @@ export class BaseChecker {
         });
         return { cards, factions, code: deckCode };
     }
+
+    clearData() {
+        this.markedCards = [];
+        this.markedFactions = [];
+        this.issues = [];
+    }
 }

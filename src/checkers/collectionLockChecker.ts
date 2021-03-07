@@ -10,6 +10,7 @@ export class CollectionLockChecker
     }
 
     check(): CheckResult {
+        this.clearData();
         const CARD_LIMIT: number = 3;
         let cardsCount: object = {};
         let cards: object = {};

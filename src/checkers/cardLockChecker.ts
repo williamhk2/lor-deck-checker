@@ -8,6 +8,7 @@ export class CardLockChecker extends BaseChecker implements CheckerInterface {
     }
 
     check(): CheckResult {
+        this.clearData();
         let cards: string[] = [];
         let markedCards: string[] = [];
 

@@ -22,6 +22,7 @@ export class RiotLockChecker extends BaseChecker implements CheckerInterface {
     }
 
     check(): CheckResult {
+        this.clearData();
         this.decks.map((deck) => {
             this.checkChampionCards(deck);
             this.checkFactions(deck.factions);

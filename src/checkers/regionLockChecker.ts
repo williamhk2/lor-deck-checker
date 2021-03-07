@@ -8,6 +8,7 @@ export class RegionLockChecker extends BaseChecker implements CheckerInterface {
     }
 
     check(): CheckResult {
+        this.clearData();
         let factions: number[] = [];
         let markedFactions: number[] = [];
 
