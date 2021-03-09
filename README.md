@@ -1,4 +1,7 @@
 # lor-deck-checker
+[![Build status](https://github.com/williamhk2/lor-deck-checker/workflows/Tests/badge.svg)](https://github.com/williamhk2/lor-deck-checker/actions?query=workflow%3ATests)
+[![npm puppeteer package](https://img.shields.io/npm/v/lor-deck-checker.svg)](https://npmjs.org/package/lor-deck-checker)
+
 Check lor decks, based on tournament rules.
 
 This package is intended to be used in a lor deck checker web app (TBD).
@@ -43,7 +46,7 @@ Example return from the deck check:
 
 - `decks`: all decks with factions and cards (object definitions from [runeterra](https://github.com/SwitchbladeBot/runeterra)).
 - `markedCards`: cards with issues, according to current check rules. `count` are the total of cards in all decks.
-- `markedFactions`: cards with issues, according to current check rules.
+- `markedFactions`: regions (factions) with issues, according to current check rules.
 - `issues`: used to show messages about issues with deck. i.e., "There is more than one deck without champions" (RiotLock).
 
 ```
